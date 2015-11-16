@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "mainpage.h"
+#include "classinfo.h"
 
 namespace Ui {
 class Widget;
@@ -22,6 +23,8 @@ private:
 
 private slots:
     void slotClickLoginBtn();
+
+
 };
 
 #endif // WIDGET_H
