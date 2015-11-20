@@ -4,16 +4,11 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Soft_DEV
-CONFIG += console
-CONFIG -= app_bundle
-CONFIG += x86_64
-CONFIG -= i386
-LIBS += -lssl -lcrypto
 TEMPLATE = app
 
 
@@ -22,14 +17,17 @@ SOURCES += main.cpp\
     mainpage.cpp \
     chatpage.cpp \
     chatcontextlistitem.cpp \
-    chatcontectlistitem_s.cpp
+    chatcontectlistitem_s.cpp \
+    api_http.cpp
 
 HEADERS  += widget.h \
     mainpage.h \
     chatpage.h \
     classinfo.h \
     chatcontextlistitem.h \
-    chatcontectlistitem_s.h
+    chatcontectlistitem_s.h \
+    api_http.h \
+    type.h
 
 FORMS    += widget.ui \
     mainpage.ui \

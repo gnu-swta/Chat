@@ -6,36 +6,62 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    initPointer();
     connect(ui->login_btn, SIGNAL(clicked()),this,SLOT(slotClickLoginBtn()));
+    connect(login,SIGNAL(getReply(QNetworkReply*)),this, SLOT(slotGetReply(QNetworkReply*)));
 }
 
 Widget::~Widget()
 {
     delete ui;
+    delete mainpage;
+}
+
+void Widget::initPointer()
+{
+    login = new Api_http();
 }
 
 void Widget::slotClickLoginBtn()
 {
-    struct classArr test[5];
-    int i=0;
+    QString stdNum = ui->id->text();
+    QString passwd = ui->pw->text();
 
-    // 임시변수
-    QString tmp;
+    QString parameters;
 
-    mainpage = new mainPage();
+    parameters.append("student ");
+    parameters.append(stdNum);
+    parameters.append(" ");
 
-    for(i=0;i<5;i++)
+    parameters.append("passwd ");
+    parameters.append(passwd);
+
+    login->post_url(STUDENT,POST_LOGIN, parameters ,4);
+}
+
+void Widget::slotGetReply(QNetworkReply *re)
+{
+
+    QString getData;
+
+    if(re->error()==QNetworkReply::NoError)
     {
-        test[i].className=tmp.setNum(i)+"테스트";
-        test[i].classNum = tmp.setNum(i);
-        test[i].classRoomNum = tmp.setNum(i+2);
-        test[i].classTime = "월8, 9 [024-0175]";
+        // 에러가 없을경우
 
-        mainpage->setClassInfo(test[i]);
+        QString stdNum = ui->id->text();
+        getData = QString(re->readAll());
+
+        qDebug()<<getData;
+
+        mainpage = new mainPage(stdNum,getData);
+        this->setHidden(true);
+        mainpage->show();
+    }
+    else
+    {
+        // 에러가 있을경우
+        qDebug()<<"Reply Error!";
     }
 
 
-    mainpage->showClassList();
-    this->setHidden(true);
-    mainpage->show();
 }

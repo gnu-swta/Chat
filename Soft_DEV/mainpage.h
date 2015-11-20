@@ -6,6 +6,8 @@
 #include "chatpage.h"
 #include "classinfo.h"
 #include "chatcontextlistitem.h"
+#include "api_http.h"
+#include "type.h"
 #include <QDebug>
 
 
@@ -24,14 +26,20 @@ class mainPage : public QWidget
 private:
     ChatPage *chatpage;
     struct classArr classInfo[10];
-    int classCnt = 0;
+    int classCnt ;
+
+    QString loginData;
+    QString token;
+    QString studentNum;
+
+    Api_http *http_api;
 
 public:
-    explicit mainPage(QWidget *parent = 0);
+    explicit mainPage(QString stdNum, QString loginData ,QWidget *parent = 0);
     ~mainPage();
     void addChatList(QString className );
     void addReportList(QString className);
-    void setClassInfo(struct classArr csInfo);
+    void setClassInfo(QString data);
     void showClassList();
 
 private:
@@ -40,12 +48,18 @@ private:
     void initConnect();
     void setStudentInfo(QString name, QString stdID);
     QString makeListString(int idx);
+    QStringList getParsData(QString data);
+    void setToken(QString tk);
+    void setStudentNumber(QString stnm);
+
 
 private slots:
     void slotClickReport();
     void slotClickSet();
     void slotClickChat();
     void slotClickChatList(QModelIndex idx);
+    void slotGetReply(QNetworkReply *re);
+
 };
 
 #endif // MAINPAGE_H

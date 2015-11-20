@@ -4,6 +4,8 @@
 #include <QWidget>
 #include "mainpage.h"
 #include "classinfo.h"
+#include "api_http.h"
+#include "type.h"
 
 namespace Ui {
 class Widget;
@@ -20,11 +22,13 @@ public:
 private:
     Ui::Widget *ui;
     mainPage *mainpage;
+    Api_http *login;
+
+    void initPointer();
 
 private slots:
     void slotClickLoginBtn();
-
-
+    void slotGetReply(QNetworkReply* re);
 };
 
 #endif // WIDGET_H

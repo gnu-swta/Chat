@@ -2,19 +2,36 @@
 #include "ui_mainpage.h"
 
 
-mainPage::mainPage(QWidget *parent) :
-    QWidget(parent),
+mainPage::mainPage(QString stdNum, QString loginData, QWidget *parent) :
+    QWidget(0),
     ui(new Ui::mainPage)
 {
+    Q_UNUSED(parent);
+
     ui->setupUi(this);
     initConnect();
+    setStudentNumber(stdNum);
+    setClassInfo(loginData);
     setMainpage(1);
     setStudentInfo("정영문","2009011086");
+    http_api = new Api_http();
+    connect(http_api,SIGNAL(getReply(QNetworkReply*)),this,SLOT(slotGetReply(QNetworkReply*)));
+    QString parameter;
+    parameter.append(studentNum+" ");
+    parameter.append("Bearer ");
+    parameter.append(token);
+
+    http_api->get_url(STUDENT,POST_USER,parameter,3);
 }
 
 mainPage::~mainPage()
 {
     delete ui;
+}
+
+void mainPage::setStudentNumber(QString stnm)
+{
+    studentNum = stnm;
 }
 
 void mainPage::initConnect()
@@ -70,6 +87,11 @@ void mainPage::addReportList(QString className)
     ui->report_list->addItem(subject);
 }
 
+void mainPage::setToken(QString tk)
+{
+   token = tk;
+}
+
 void mainPage::slotClickChatList(QModelIndex idx)
 {
     /*
@@ -77,7 +99,7 @@ void mainPage::slotClickChatList(QModelIndex idx)
      * 얻는 함수
      */
     int clicked_idx = idx.row();
-    QString subject_name = ui->chat_list->item(clicked_idx)->text();
+    QString subject_name = classInfo[clicked_idx].className;
 
     chatpage = new ChatPage(subject_name, "jym","2009011086");
     chatpage->show();
@@ -90,12 +112,60 @@ void mainPage::setStudentInfo(QString name, QString stdID)
     ui->nameLB->setText(name);
 }
 
-void mainPage::setClassInfo(classArr csInfo)
+void mainPage::setClassInfo(QString data)
 {
-    classInfo[classCnt].className       = csInfo.className;
-    classInfo[classCnt].classNum        = csInfo.classNum;
-    classInfo[classCnt].classRoomNum    = csInfo.classRoomNum;
-    classInfo[classCnt++].classTime     = csInfo.classTime;
+    QStringList para = getParsData(data);
+    int i = 0;
+    classCnt = 0;
+
+    // 서버에서 받아온 토근 저장
+    if(para.at(0)=="jwt")
+        setToken(para.at(1));
+
+    qDebug()<<"second-1";
+    for(i=2;i<para.size();)
+    {
+        if(para.at(i)==PK_CLASS)
+        {classInfo[classCnt].classNum = para.at(++i);}
+
+        else if(para.at(i)==NAME)
+        {classInfo[classCnt].className = para.at(++i);}
+
+        else if(para.at(i)==GROUP)
+        {classInfo[classCnt].classRoomNum = para.at(++i);}
+
+        else if(para.at(i)==CLASSTIME)
+        {
+            if(para.at(++i) == NON_CLASSTIME)
+                classInfo[classCnt++].classTime = " ";
+            else
+                classInfo[classCnt++].classTime = para.at(i);
+        }
+
+        i++ ;
+    }
+
+    qDebug()<<"second1";
+    showClassList();
+}
+
+QStringList mainPage::getParsData(QString data)
+{
+    QRegExp parseType("("+QRegExp::escape(":[{")+"|"+
+                      QRegExp::escape("}]}")+"|"+
+                      QRegExp::escape("\",\"")+"|"+
+                      QRegExp::escape("\":")+"|"+
+                      QRegExp::escape("},{")+"|"+
+                      QRegExp::escape(",\"")+"|"+
+                      QRegExp::escape("\”")+"|"+
+                      QRegExp::escape("\"")+"|"+
+                      QRegExp::escape("{")+"|"+
+                      QRegExp::escape("}")+")");
+
+     QStringList parameter;
+     parameter=data.split(parseType,QString::SkipEmptyParts);
+
+     return parameter;
 }
 
 void mainPage::showClassList()
@@ -103,17 +173,40 @@ void mainPage::showClassList()
     int i=0;
     QString class_info;
 
-    qDebug() << classCnt;
     for(i=0;i<classCnt;i++)
     {
         class_info = makeListString(i);
         addChatList(class_info);
         addReportList(class_info);
     }
+
 }
 
 QString mainPage::makeListString(int idx)
 {
-    QString classIF = classInfo[idx].className+"["+classInfo[idx].classRoomNum+"]-"+classInfo[idx].classTime;;
+    QString classIF = classInfo[idx].className+"\n"+"     "+classInfo[idx].classTime;
     return classIF;
+}
+
+void mainPage::slotGetReply(QNetworkReply *re)
+{
+
+    QString getData;
+
+    if(re->error()==QNetworkReply::NoError)
+    {
+        // 에러가 없을경우
+
+        getData = QString(re->readAll());
+        qDebug()<<getData;
+
+    }
+
+    else
+    {
+        // 에러가 있을경우
+        qDebug()<<"Reply Error!";
+        getData = QString(re->readAll());
+        qDebug()<<getData;
+    }
 }

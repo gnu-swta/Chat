@@ -11,5 +11,13 @@ struct classArr{
 };
 
 
+
+#define PK_CLASS        "pk_class"
+#define NAME            "name"
+#define GROUP           "group"
+#define CLASSTIME       "classTime"
+#define NON_CLASSTIME   "  [ ]"
+
+
 #endif // CLASSINFO
 
