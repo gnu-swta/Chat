@@ -6,6 +6,7 @@
 #include "classinfo.h"
 #include "api_http.h"
 #include "type.h"
+#include "loading.h"
 
 namespace Ui {
 class Widget;
@@ -23,6 +24,7 @@ private:
     Ui::Widget *ui;
     mainPage *mainpage;
     Api_http *login;
+    Loading *load;
 
     void initPointer();
 

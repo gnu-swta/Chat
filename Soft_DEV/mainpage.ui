@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>417</width>
-    <height>429</height>
+    <width>426</width>
+    <height>514</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -81,26 +81,104 @@
       <widget class="QPushButton" name="chat_btn">
        <property name="minimumSize">
         <size>
-         <width>0</width>
-         <height>0</height>
+         <width>150</width>
+         <height>70</height>
         </size>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>70</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#chat_btn{
+	
+	border-image: url(:/res/res/chat_o.png);
+}
+
+QPushButton#chat_btn:hover{
+	
+	border-image: url(:/res/res/chat_c.png);
+}
+
+QPushButton#chat_btn:pressed {
+	
+	border-image: url(:/res/res/chat_c.png);
+}</string>
+       </property>
        <property name="text">
-        <string>채팅</string>
+        <string/>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="report_btn">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>70</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>70</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#report_btn{
+	
+	border-image: url(:/res/res/report_o.png);
+}
+
+QPushButton#report_btn:hover{
+	
+	border-image: url(:/res/res/report_c.png);
+}
+
+QPushButton#report_btn:pressed {
+	
+	border-image: url(:/res/res/report_c.png);
+}</string>
+       </property>
        <property name="text">
-        <string>레포트</string>
+        <string/>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="set_btn">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>70</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>70</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton#set_btn{
+	
+	border-image: url(:/res/res/set_o.png);
+}
+
+QPushButton#set_btn:hover{
+	
+	border-image: url(:/res/res/set_c.png);
+}
+
+QPushButton#set_btn:pressed {
+	
+	border-image: url(:/res/res/set_o.png);
+}</string>
+       </property>
        <property name="text">
-        <string>설정</string>
+        <string/>
        </property>
       </widget>
      </item>

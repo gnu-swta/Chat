@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     chatpage.cpp \
     chatcontextlistitem.cpp \
     chatcontectlistitem_s.cpp \
-    api_http.cpp
+    api_http.cpp \
+    loading.cpp
 
 HEADERS  += widget.h \
     mainpage.h \
@@ -27,13 +28,15 @@ HEADERS  += widget.h \
     chatcontextlistitem.h \
     chatcontectlistitem_s.h \
     api_http.h \
-    type.h
+    type.h \
+    loading.h
 
 FORMS    += widget.ui \
     mainpage.ui \
     chatpage.ui \
     chatcontextlistitem.ui \
-    chatcontectlistitem_s.ui
+    chatcontectlistitem_s.ui \
+    loading.ui
 
 RESOURCES += \
     resource.qrc

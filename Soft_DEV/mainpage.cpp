@@ -46,6 +46,8 @@ void mainPage::initConnect()
 void mainPage::slotClickChat()
 {
     setMainpage(1);
+    //ui->chat_btn->setIcon(QIcon(":/res/res/chat_c.png"));
+    //ui->chat_btn->setIconSize((QSize(155,70)));
 }
 
 void mainPage::slotClickReport()
@@ -62,6 +64,10 @@ void mainPage::setMainpage(int number)
 {
     // 초기화면 설정 : 채팅 목록 선택하는 화면
     // 나머지는 다 숨김모드
+
+    //ui->chat_btn->set
+
+
     ui->chat_list->setVisible((CLICK_CHAT==number));
     ui->report_list->setVisible((CLICK_REPORT==number));
     ui->set_list->setVisible((CLICK_SET==number));

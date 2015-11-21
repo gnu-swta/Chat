@@ -4,5 +4,24 @@
         <file>res/background.png</file>
         <file>res/student.png</file>
         <file>res/chatline.png</file>
+        <file>res/camera_com.png</file>
+        <file>res/captionback.png</file>
+        <file>res/login_down.png</file>
+        <file>res/login_up.png</file>
+        <file>res/LoginBack.png</file>
+        <file>res/loginbar.png</file>
+        <file>res/loginUnder.png</file>
+        <file>res/password_up.png</file>
+        <file>res/summit_c.png</file>
+        <file>res/summit_o.png</file>
+        <file>res/summit_p.png</file>
+        <file>res/backunder.png</file>
+        <file>res/loginUnd.png</file>
+        <file>res/chat_c.png</file>
+        <file>res/report_c.png</file>
+        <file>res/set_c.png</file>
+        <file>res/chat_o.png</file>
+        <file>res/report_o.png</file>
+        <file>res/set_o.png</file>
     </qresource>
 </RCC>

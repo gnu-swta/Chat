@@ -2,10 +2,12 @@
 #include "ui_widget.h"
 
 Widget::Widget(QWidget *parent) :
-    QWidget(parent),
+    QWidget(0, Qt::FramelessWindowHint),
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    this->setAutoFillBackground(true);
+    this->setAttribute(Qt::WA_TranslucentBackground, true);
     initPointer();
     connect(ui->login_btn, SIGNAL(clicked()),this,SLOT(slotClickLoginBtn()));
     connect(login,SIGNAL(getReply(QNetworkReply*)),this, SLOT(slotGetReply(QNetworkReply*)));
@@ -37,6 +39,9 @@ void Widget::slotClickLoginBtn()
     parameters.append(passwd);
 
     login->post_url(STUDENT,POST_LOGIN, parameters ,4);
+    load = new Loading();
+    setWindowOpacity(0.8);
+    load->show();
 }
 
 void Widget::slotGetReply(QNetworkReply *re)
@@ -56,11 +61,16 @@ void Widget::slotGetReply(QNetworkReply *re)
         mainpage = new mainPage(stdNum,getData);
         this->setHidden(true);
         mainpage->show();
+        load->hide();
     }
     else
     {
         // 에러가 있을경우
         qDebug()<<"Reply Error!";
+        ui->guide->setText("로그인 실패입니다. 다시 로그인해주세요.");
+
+        load->hide();
+        setWindowOpacity(1);
     }
 
 

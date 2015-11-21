@@ -18,7 +18,6 @@ Api_http::Api_http(QObject *parent)
 void Api_http::post_url(int user, int url_type, QString data, int count)
 {
     QString url;
-
     QByteArray postData;
 
     QUrl params;
