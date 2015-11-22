@@ -23,5 +23,8 @@
         <file>res/chat_o.png</file>
         <file>res/report_o.png</file>
         <file>res/set_o.png</file>
+        <file>res/send_b.png</file>
+        <file>res/send_c.png</file>
+        <file>res/send_o.png</file>
     </qresource>
 </RCC>

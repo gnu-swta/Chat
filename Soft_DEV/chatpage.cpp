@@ -50,7 +50,7 @@ void ChatPage::getStudentInfo(QString name, QString id)
      connect(ui->send_chat,SIGNAL(clicked()),this,SLOT(slotClickSendBtn()));
      connect(this,SIGNAL(pressEnterkey()),this,SLOT(slotClickSendBtn()));
      connect(this, SIGNAL(sendMessage(QString,QString)), this, SLOT(slotSendMessage(QString,QString)));
-     connect(ui->get_test,SIGNAL(clicked()),this,SLOT(slotGetMessage()));
+     //connect(ui->get_test,SIGNAL(clicked()),this,SLOT(slotGetMessage()));
  }
 
  void ChatPage::slotChangeHash(QString hash)

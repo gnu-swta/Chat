@@ -21,6 +21,7 @@ mainPage::mainPage(QString stdNum, QString loginData, QWidget *parent) :
     parameter.append("Bearer ");
     parameter.append(token);
 
+
     http_api->get_url(STUDENT,POST_USER,parameter,3);
 }
 
@@ -32,6 +33,8 @@ mainPage::~mainPage()
 void mainPage::setStudentNumber(QString stnm)
 {
     studentNum = stnm;
+    // 메인위젯 채팅버튼 액티브 초기화
+    ui->chat_btn->setStyleSheet(QStringLiteral("QPushButton#chat_btn{border-image: url(:/res/res/chat_c.png);}"));
 }
 
 void mainPage::initConnect()
@@ -46,27 +49,31 @@ void mainPage::initConnect()
 void mainPage::slotClickChat()
 {
     setMainpage(1);
-    //ui->chat_btn->setIcon(QIcon(":/res/res/chat_c.png"));
-    //ui->chat_btn->setIconSize((QSize(155,70)));
+    ui->chat_btn->setStyleSheet(QStringLiteral("QPushButton#chat_btn{border-image: url(:/res/res/chat_c.png);}"));
+    ui->report_btn->setStyleSheet(QStringLiteral("QPushButton#report_btn{border-image: url(:/res/res/report_o.png);}"));
+    ui->set_btn->setStyleSheet(QStringLiteral("QPushButton#set_btn{border-image: url(:/res/res/set_o.png);}"));
 }
 
 void mainPage::slotClickReport()
 {
     setMainpage(2);
+    ui->chat_btn->setStyleSheet(QStringLiteral("QPushButton#chat_btn{border-image: url(:/res/res/chat_o.png);}"));
+    ui->report_btn->setStyleSheet(QStringLiteral("QPushButton#report_btn{border-image: url(:/res/res/report_c.png);}"));
+    ui->set_btn->setStyleSheet(QStringLiteral("QPushButton#set_btn{border-image: url(:/res/res/set_o.png);}"));
 }
 
 void mainPage::slotClickSet()
 {
     setMainpage(3);
+    ui->chat_btn->setStyleSheet(QStringLiteral("QPushButton#chat_btn{border-image: url(:/res/res/chat_o.png);}"));
+    ui->report_btn->setStyleSheet(QStringLiteral("QPushButton#report_btn{border-image: url(:/res/res/report_o.png);}"));
+    ui->set_btn->setStyleSheet(QStringLiteral("QPushButton#set_btn{border-image: url(:/res/res/set_c.png);}"));
 }
 
 void mainPage::setMainpage(int number)
 {
     // 초기화면 설정 : 채팅 목록 선택하는 화면
     // 나머지는 다 숨김모드
-
-    //ui->chat_btn->set
-
 
     ui->chat_list->setVisible((CLICK_CHAT==number));
     ui->report_list->setVisible((CLICK_REPORT==number));
@@ -76,21 +83,35 @@ void mainPage::setMainpage(int number)
 void mainPage::addChatList(QString className)
 {
     QListWidgetItem *subject = new QListWidgetItem();
+    static int item_idx=0;
 
     subject->setIcon(QIcon(":/res/res/subject.png"));
     subject->setText(className);
 
+    item_idx++;
+
     ui->chat_list->addItem(subject);
+
+    // 짝수번 인덱스 아이템은 배경 변경
+    if(item_idx%2==1)
+        ui->chat_list->item(item_idx-1)->setBackgroundColor(QColor(226,233,246));
 }
 
 void mainPage::addReportList(QString className)
 {
     QListWidgetItem *subject = new QListWidgetItem();
+    static int item_idx=0;
+
+    item_idx++;
 
     subject->setIcon(QIcon(":/res/res/subject.png"));
     subject->setText(className);
 
     ui->report_list->addItem(subject);
+
+    // 짝수번 인덱스 아이템은 배경 변경
+    if(item_idx%2==1)
+        ui->report_list->item(item_idx-1)->setBackgroundColor(QColor(226,233,246));
 }
 
 void mainPage::setToken(QString tk)
@@ -128,7 +149,6 @@ void mainPage::setClassInfo(QString data)
     if(para.at(0)=="jwt")
         setToken(para.at(1));
 
-    qDebug()<<"second-1";
     for(i=2;i<para.size();)
     {
         if(para.at(i)==PK_CLASS)
@@ -151,7 +171,6 @@ void mainPage::setClassInfo(QString data)
         i++ ;
     }
 
-    qDebug()<<"second1";
     showClassList();
 }
 
@@ -183,6 +202,7 @@ void mainPage::showClassList()
     {
         class_info = makeListString(i);
         addChatList(class_info);
+
         addReportList(class_info);
     }
 
@@ -202,7 +222,6 @@ void mainPage::slotGetReply(QNetworkReply *re)
     if(re->error()==QNetworkReply::NoError)
     {
         // 에러가 없을경우
-
         getData = QString(re->readAll());
         qDebug()<<getData;
 

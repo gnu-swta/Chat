@@ -34,6 +34,7 @@ private:
 
     Api_http *http_api;
 
+
 public:
     explicit mainPage(QString stdNum, QString loginData ,QWidget *parent = 0);
     ~mainPage();

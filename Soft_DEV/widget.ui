@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>330</width>
-    <height>423</height>
+    <height>397</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -183,6 +183,9 @@ background-color: rgba(255, 255, 255, 0);</string>
              <property name="styleSheet">
               <string notr="true">border-image: url(:/res/res/login_down.png);</string>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
             </widget>
            </item>
           </layout>
@@ -246,8 +249,14 @@ background-color: rgba(255, 255, 255, 0);</string>
              <property name="text">
               <string notr="true"/>
              </property>
+             <property name="frame">
+              <bool>false</bool>
+             </property>
              <property name="echoMode">
               <enum>QLineEdit::Password</enum>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
             </widget>
            </item>
