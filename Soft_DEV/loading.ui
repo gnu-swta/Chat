@@ -27,7 +27,7 @@
       <enum>Qt::RightToLeft</enum>
      </property>
      <property name="text">
-      <string>로그인중....</string>
+      <string>로그인중...</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

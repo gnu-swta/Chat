@@ -7,7 +7,6 @@ Api_http::Api_http(QObject *parent)
             this,SLOT(slotGetreply(QNetworkReply*)));
 }
 
-
 /**
  * @brief Api_http::post_url
  * @param user      : 사용자 (학생, 교수)
@@ -15,7 +14,7 @@ Api_http::Api_http(QObject *parent)
  * @param data      : 파라미터
  * @param count     : 파라미터 개수
  */
-void Api_http::post_url(int user, int url_type, QString data, int count)
+void Api_http::post_url(int user, int url_type, QString data, QString header, int count, int isHeader)
 {
     QString url;
     QByteArray postData;
@@ -29,8 +28,29 @@ void Api_http::post_url(int user, int url_type, QString data, int count)
 
     // make url
     url = appendUrl(user,url_type);
-    getParameters(data, count);
 
+    if(isHeader == HEADER_INCLUDE)
+    {
+        QString key = "Authorization";
+        QString sender = "Bearer ";
+        QByteArray tk;
+        QByteArray ky;
+        QByteArray sd;
+
+
+        tk = header.toLatin1();
+        qDebug()<<tk;
+
+        ky = key.toLatin1();
+        sd = sender.toLatin1();
+
+
+        networkRequest.setRawHeader(ky,sd+tk);
+
+        qDebug()<<url;
+    }
+
+    getParameters(data, count);
     // url 세팅
     serviceUrl = QUrl(url);
 
@@ -56,6 +76,24 @@ void Api_http::post_url(int user, int url_type, QString data, int count)
     networkManager->post(networkRequest,postData);
 }
 
+QStringList Api_http::getParsData(QString data)
+{
+    QRegExp parseType("("+QRegExp::escape(":[{")+"|"+
+                      QRegExp::escape("}]}")+"|"+
+                      QRegExp::escape("\",\"")+"|"+
+                      QRegExp::escape("\":")+"|"+
+                      QRegExp::escape("},{")+"|"+
+                      QRegExp::escape(",\"")+"|"+
+                      QRegExp::escape("\”")+"|"+
+                      QRegExp::escape("\"")+"|"+
+                      QRegExp::escape("{")+"|"+
+                      QRegExp::escape("}")+")");
+
+     QStringList parameter;
+     parameter=data.split(parseType,QString::SkipEmptyParts);
+
+     return parameter;
+}
 
 QString Api_http::appendUrl(int user, int url_type)
 {
@@ -71,10 +109,16 @@ QString Api_http::appendUrl(int user, int url_type)
         break;
     case (POST_USER):
         url.append(URL_USER);
-
+    case (POST_CHAT):
+        url.append(URL_CHAT);
+        break;
+    case (GET_CHAT):
+        url.append(URL_CHAT);
         break;
     case (POST_CLASS):
         //url.append(URL_PROFESSOR);
+        break;
+    default:
         break;
     }
 
@@ -85,6 +129,10 @@ QString Api_http::appendUrl(int user, int url_type)
         break;
     case (PROFESSOR):
         url.append(URL_PROFESSOR);
+        break;
+
+    // 채팅일경우 누가 사용하든 상관없기때문에 생략
+    default:
         break;
     }
 
@@ -105,9 +153,9 @@ void Api_http::get_url(int user, int url_type, QString data, int count)
     QString key = "Authorization";
     QString sender = "Bearer ";
 
-    // parameter 1 : 학번
-    // parameter 2 : 전달자
-    // parameter 3 : 토큰
+    // parameter 0 : 학번 or pk_class
+    // parameter 1 : 토큰
+    // parameter 2 : 시퀀스 넘버
 
     // make url
     url = appendUrl(user,url_type);
@@ -115,24 +163,26 @@ void Api_http::get_url(int user, int url_type, QString data, int count)
 
     url.append("/"+parameters[0]);
 
+    if(count>2)
+        url.append("/"+parameters[2]);
+
     qDebug()<<parameters[0];
     qDebug()<<parameters[1];
-    qDebug()<<parameters[2];
 
     serviceUrl = QUrl(url);
-    tk = parameters[2].toLatin1();
+    tk = parameters[1].toLatin1();
+
     ky = key.toLatin1();
     sd = sender.toLatin1();
 
-    //query.addQueryItem("student_number",parameters[0]);
     serviceUrl.setQuery(query);
-    //networkRequest.setRawHeader("Authorization","Bearer "+parameters[2].toLatin1());
     networkRequest.setRawHeader(ky,sd+tk);
 
     qDebug()<<key.toLatin1();
 
     networkRequest.setUrl(serviceUrl);
     networkManager->get(networkRequest);
+    qDebug()<<url;
 
     qDebug()<<"Get!!";
 }

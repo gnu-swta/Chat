@@ -12,17 +12,7 @@ mainPage::mainPage(QString stdNum, QString loginData, QWidget *parent) :
     initConnect();
     setStudentNumber(stdNum);
     setClassInfo(loginData);
-    setMainpage(1);
-    setStudentInfo("정영문","2009011086");
-    http_api = new Api_http();
-    connect(http_api,SIGNAL(getReply(QNetworkReply*)),this,SLOT(slotGetReply(QNetworkReply*)));
-    QString parameter;
-    parameter.append(studentNum+" ");
-    parameter.append("Bearer ");
-    parameter.append(token);
-
-
-    http_api->get_url(STUDENT,POST_USER,parameter,3);
+    requireStudentInfo();
 }
 
 mainPage::~mainPage()
@@ -39,10 +29,17 @@ void mainPage::setStudentNumber(QString stnm)
 
 void mainPage::initConnect()
 {
+    // UI 초기화 ( 채팅화면 출력 )
+    setMainpage(1);
+
+    // 통신을 위한 객체 생성
+    http_api = new Api_http();
+
     connect(ui->chat_btn,   SIGNAL(clicked()),this, SLOT(slotClickChat()));
     connect(ui->report_btn, SIGNAL(clicked()),this, SLOT(slotClickReport()));
     connect(ui->set_btn,    SIGNAL(clicked()),this, SLOT(slotClickSet()));
     connect(ui->chat_list,  SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotClickChatList(QModelIndex)));
+    connect(http_api,SIGNAL(getReply(QNetworkReply*)),this,SLOT(slotGetReply(QNetworkReply*)));
 }
 
 
@@ -126,22 +123,28 @@ void mainPage::slotClickChatList(QModelIndex idx)
      * 얻는 함수
      */
     int clicked_idx = idx.row();
-    QString subject_name = classInfo[clicked_idx].className;
 
-    chatpage = new ChatPage(subject_name, "jym","2009011086");
+    chatInfo.token      = token;
+    chatInfo.className  = classInfo[clicked_idx].className;
+    chatInfo.stdID      = studentInfo.studentID;
+    chatInfo.name       = studentInfo.name;
+    chatInfo.fkClass    = classInfo[clicked_idx].classNum;
+
+    chatpage = new ChatPage(chatInfo);
     chatpage->show();
 }
 
-void mainPage::setStudentInfo(QString name, QString stdID)
+void mainPage::setStudentInfo(QString name, QString stdID, QString depart)
 {
     // 로그인한 학생의 정보를 화면 우측상단에 출력
     ui->stdIDLB->setText(stdID);
     ui->nameLB->setText(name);
+    ui->depart->setText(depart);
 }
 
 void mainPage::setClassInfo(QString data)
 {
-    QStringList para = getParsData(data);
+    QStringList para = http_api->getParsData(data);
     int i = 0;
     classCnt = 0;
 
@@ -173,24 +176,42 @@ void mainPage::setClassInfo(QString data)
 
     showClassList();
 }
-
-QStringList mainPage::getParsData(QString data)
+// 서버로부터 학생정보 요청
+void mainPage::requireStudentInfo()
 {
-    QRegExp parseType("("+QRegExp::escape(":[{")+"|"+
-                      QRegExp::escape("}]}")+"|"+
-                      QRegExp::escape("\",\"")+"|"+
-                      QRegExp::escape("\":")+"|"+
-                      QRegExp::escape("},{")+"|"+
-                      QRegExp::escape(",\"")+"|"+
-                      QRegExp::escape("\”")+"|"+
-                      QRegExp::escape("\"")+"|"+
-                      QRegExp::escape("{")+"|"+
-                      QRegExp::escape("}")+")");
+    QString parameter;
+    parameter.append(studentNum+" ");
+    parameter.append(token);
 
-     QStringList parameter;
-     parameter=data.split(parseType,QString::SkipEmptyParts);
+    http_api->get_url(STUDENT,GET_USER,parameter,2);
+}
 
-     return parameter;
+// 서버로부터 학생 정보를 얻음
+void mainPage::getStudentInfo(QString data)
+{
+    QStringList para = http_api->getParsData(data);
+    int i = 0;
+
+    for(i=0;i<para.size();)
+    {
+        if(para.at(i)==PK_STUDENT)
+        {studentInfo.studentID = para.at(++i);}
+
+        // 위와 같은 학번이므로 생략
+        else if(para.at(i)==NUMBER)
+        {(++i);}
+
+        else if(para.at(i)==NAME)
+        {studentInfo.name = para.at(++i);}
+
+        else if(para.at(i)==DEPARTMENT)
+        {studentInfo.department = para.at(++i);}
+        i++ ;
+    }
+
+    // 학생 정보 출력
+    setStudentInfo(studentInfo.name,studentInfo.studentID,studentInfo.department);
+
 }
 
 void mainPage::showClassList()
@@ -223,15 +244,13 @@ void mainPage::slotGetReply(QNetworkReply *re)
     {
         // 에러가 없을경우
         getData = QString(re->readAll());
-        qDebug()<<getData;
-
+        studentData = getData;
+        getStudentInfo(studentData);
     }
 
     else
     {
         // 에러가 있을경우
         qDebug()<<"Reply Error!";
-        getData = QString(re->readAll());
-        qDebug()<<getData;
     }
 }

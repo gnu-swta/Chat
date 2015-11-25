@@ -30,13 +30,13 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="">
+    <widget class="QFrame" name="frame">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(227, 133, 135);</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>0</number>
+       <number>7</number>
       </property>
       <property name="leftMargin">
        <number>10</number>
@@ -79,6 +79,19 @@
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="depart">
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>학과</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="nameLB">

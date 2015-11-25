@@ -18,8 +18,9 @@ class Api_http : public QObject
     Q_OBJECT
 public:
     Api_http(QObject *parent = 0);
-    void post_url(int user, int url_type, QString data, int count);
+    void post_url(int user, int url_type, QString data, QString header, int count, int isHeader);
     void get_url(int user, int url_type, QString data, int count);
+    QStringList getParsData(QString data);
 
 
 private:

@@ -38,7 +38,7 @@ void Widget::slotClickLoginBtn()
     parameters.append("passwd ");
     parameters.append(passwd);
 
-    login->post_url(STUDENT,POST_LOGIN, parameters ,4);
+    login->post_url(STUDENT,POST_LOGIN, parameters, NULL ,4,HEADER_NON);
     load = new Loading();
     setWindowOpacity(0.8);
     load->show();

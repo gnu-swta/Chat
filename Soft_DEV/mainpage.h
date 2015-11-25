@@ -26,11 +26,14 @@ class mainPage : public QWidget
 private:
     ChatPage *chatpage;
     struct classArr classInfo[10];
+    struct studentArr studentInfo;
+    struct chatArr chatInfo;
     int classCnt ;
 
     QString loginData;
     QString token;
     QString studentNum;
+    QString studentData;
 
     Api_http *http_api;
 
@@ -47,11 +50,12 @@ private:
     Ui::mainPage *ui;
     void setMainpage(int number);
     void initConnect();
-    void setStudentInfo(QString name, QString stdID);
+    void setStudentInfo(QString name, QString stdID, QString depart);
     QString makeListString(int idx);
-    QStringList getParsData(QString data);
     void setToken(QString tk);
     void setStudentNumber(QString stnm);
+    void getStudentInfo(QString data);
+    void requireStudentInfo();
 
 
 private slots:
