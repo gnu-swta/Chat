@@ -17,6 +17,7 @@ mainPage::mainPage(QString stdNum, QString loginData, QWidget *parent) :
 
 mainPage::~mainPage()
 {
+    qDebug()<<"Bye";
     delete ui;
 }
 
@@ -45,6 +46,7 @@ void mainPage::initConnect()
 
 void mainPage::slotClickChat()
 {
+    qDebug()<<"quit";
     setMainpage(1);
     ui->chat_btn->setStyleSheet(QStringLiteral("QPushButton#chat_btn{border-image: url(:/res/res/chat_c.png);}"));
     ui->report_btn->setStyleSheet(QStringLiteral("QPushButton#report_btn{border-image: url(:/res/res/report_o.png);}"));
@@ -131,8 +133,12 @@ void mainPage::slotClickChatList(QModelIndex idx)
     chatInfo.fkClass    = classInfo[clicked_idx].classNum;
 
     chatpage = new ChatPage(chatInfo);
-    chatpage->show();
+    connect(chatpage,SIGNAL(successGetdata()),this,SLOT(slotShowChatpage()));
+
 }
+
+void mainPage::slotShowChatpage()
+{chatpage->show();}
 
 void mainPage::setStudentInfo(QString name, QString stdID, QString depart)
 {
@@ -180,7 +186,7 @@ void mainPage::setClassInfo(QString data)
 void mainPage::requireStudentInfo()
 {
     QString parameter;
-    parameter.append(studentNum+" ");
+    parameter.append(studentNum+"/");
     parameter.append(token);
 
     http_api->get_url(STUDENT,GET_USER,parameter,2);

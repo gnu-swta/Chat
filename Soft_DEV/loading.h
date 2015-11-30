@@ -2,6 +2,7 @@
 #define LOADING_H
 
 #include <QWidget>
+#include <QDebug>
 
 namespace Ui {
 class Loading;

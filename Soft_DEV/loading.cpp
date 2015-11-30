@@ -12,5 +12,6 @@ Loading::Loading(QWidget *parent) :
 
 Loading::~Loading()
 {
+    qDebug()<<"quit load";
     delete ui;
 }

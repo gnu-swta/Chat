@@ -39,15 +39,11 @@ void Api_http::post_url(int user, int url_type, QString data, QString header, in
 
 
         tk = header.toLatin1();
-        qDebug()<<tk;
-
         ky = key.toLatin1();
         sd = sender.toLatin1();
 
 
         networkRequest.setRawHeader(ky,sd+tk);
-
-        qDebug()<<url;
     }
 
     getParameters(data, count);
@@ -60,8 +56,6 @@ void Api_http::post_url(int user, int url_type, QString data, QString header, in
 
     for(i=0;i<count/2;i++)
     {
-
-        qDebug()<<parameters[j]+" "+parameters[j+1];
         query.addQueryItem(parameters[j],parameters[j+1]);
 
         j+=2;
@@ -166,9 +160,6 @@ void Api_http::get_url(int user, int url_type, QString data, int count)
     if(count>2)
         url.append("/"+parameters[2]);
 
-    qDebug()<<parameters[0];
-    qDebug()<<parameters[1];
-
     serviceUrl = QUrl(url);
     tk = parameters[1].toLatin1();
 
@@ -178,13 +169,8 @@ void Api_http::get_url(int user, int url_type, QString data, int count)
     serviceUrl.setQuery(query);
     networkRequest.setRawHeader(ky,sd+tk);
 
-    qDebug()<<key.toLatin1();
-
     networkRequest.setUrl(serviceUrl);
     networkManager->get(networkRequest);
-    qDebug()<<url;
-
-    qDebug()<<"Get!!";
 }
 
 /**
@@ -194,7 +180,7 @@ void Api_http::get_url(int user, int url_type, QString data, int count)
  */
 QString* Api_http::getParameters(QString data, int count)
 {
-    QRegExp parseType(" ");
+    QRegExp parseType("/");
     QStringList parameter =data.split(parseType,QString::SkipEmptyParts);
 
     int i=0;

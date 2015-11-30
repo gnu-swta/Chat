@@ -31,11 +31,11 @@ void Widget::slotClickLoginBtn()
 
     QString parameters;
 
-    parameters.append("student ");
+    parameters.append("student/");
     parameters.append(stdNum);
-    parameters.append(" ");
+    parameters.append("/");
 
-    parameters.append("passwd ");
+    parameters.append("passwd/");
     parameters.append(passwd);
 
     login->post_url(STUDENT,POST_LOGIN, parameters, NULL ,4,HEADER_NON);
@@ -61,7 +61,7 @@ void Widget::slotGetReply(QNetworkReply *re)
         mainpage = new mainPage(stdNum,getData);
         this->setHidden(true);
         mainpage->show();
-        load->hide();
+        load->close();
     }
     else
     {

@@ -2,31 +2,35 @@
 #include "ui_chatpage.h"
 
 ChatPage::ChatPage(struct chatArr chatInfo, QWidget *parent) :
-    QWidget(parent),
+    QWidget(0),
     ui(new Ui::ChatPage)
 {
     ui->setupUi(this);
 
     http_api = new Api_http();
+    get_chat = new Api_http();
     msgSeq = 0;
+    isfirst = 0;
+    isGet = 1;
 
     initHachCombo();
     initConnect();
     setChatInfo(chatInfo);
 
-
     getStudentInfo(chatInfo.name, chatInfo.stdID);
     setSubjectName(chatInfo.className);
-    qDebug()<<"Request date ";
     requestBeforeData(0);
-
-    //timer.start(1000);
+    timer.start(POLINGTIME);
 
 }
 
 
 ChatPage::~ChatPage()
 {
+    qDebug()<<"bye";
+    timer.stop();
+
+    delete &timer;
     delete ui;
 }
 
@@ -46,8 +50,8 @@ void ChatPage::requestBeforeData(int seq)
 {
     QString parameter;
     QString sq;
-    parameter.append(chatIf.fkClass+" ");
-    parameter.append(chatIf.token+" ");
+    parameter.append(chatIf.fkClass+"/");
+    parameter.append(chatIf.token+"/");
     parameter.append(sq.setNum(seq));
 
     http_api->get_url(DONCARE,GET_CHAT,parameter,3);
@@ -79,12 +83,60 @@ void ChatPage::requestBeforeData(int seq)
      connect(this, SIGNAL(sendMessage(QString)), this, SLOT(slotSendMessage(QString)));
      connect(http_api,SIGNAL(getReply(QNetworkReply*)),this,SLOT(slotGetMessage(QNetworkReply*)));
      connect(&timer,SIGNAL(timeout()),this,SLOT(slotTimeout()));
+     connect(get_chat,SIGNAL(getReply(QNetworkReply*)),this,SLOT(slotPolingGetmessage(QNetworkReply*)));
+     connect(this,SIGNAL(destroyed(QObject*)),this,SLOT(slotquit(QObject*)));
      //connect(ui->get_test,SIGNAL(clicked()),this,SLOT(slotGetMessage()));
+ }
+
+ void ChatPage::slotquit(QObject *q)
+ {
+     qDebug()<<"quite";
  }
 
  void ChatPage::slotTimeout()
  {
-     requestBeforeData(msgSeq);
+     QString parameter;
+     QString sq;
+
+     // 아직 받지않았으면
+     if(isGet == 1)
+     {
+         tmpSeq++;
+         qDebug()<<"I will add seq";
+     }
+
+     parameter.append(chatIf.fkClass+"/");
+     parameter.append(chatIf.token+"/");
+     parameter.append(sq.setNum(tmpSeq));
+     qDebug()<<"request";
+     qDebug()<<tmpSeq;
+
+     get_chat->get_url(DONCARE,GET_CHAT,parameter,3);
+     isGet = 0;
+     timer.stop();
+ }
+
+ void ChatPage::slotPolingGetmessage(QNetworkReply *re)
+ {
+     QString data;
+
+     if(re->error()==QNetworkReply::NoError)
+     {
+         // 에러가 없을경우
+         data = QString(re->readAll());
+         getDate(data);
+
+         isPoling = isPoling | POLING;
+
+         // 3초후 다시 서버에게 요청
+         timer.start(3000);
+     }
+
+     else
+     {
+         // 에러가 있을경우
+         qDebug()<<"Reply Error!";
+     }
  }
 
  void ChatPage::slotChangeHash(QString hash)
@@ -128,16 +180,18 @@ void ChatPage::requestBeforeData(int seq)
 
      header.append(chatIf.token);
 
-     msg.append("msg ");
+     msg.append("msg/");
      msg.append(message);
-     msg.append(" ");
+     msg.append("/");
 
-     msg.append("fk_class ");
+     msg.append("fk_class/");
      msg.append(chatIf.fkClass);
-     msg.append(" ");
+     msg.append("/");
 
-     msg.append("seq ");
+     msg.append("seq/");
      msg.append(seq.setNum(++msgSeq));
+
+     tmpSeq = msgSeq;
 
      http_api->post_url(DONCARE,POST_CHAT,msg,header,6,HEADER_INCLUDE);
  }
@@ -151,7 +205,8 @@ void ChatPage::requestBeforeData(int seq)
          // 에러가 없을경우
          data = QString(re->readAll());
          getDate(data);
-         qDebug()<<data;
+
+         isPoling = isPoling | NON_POLING;
      }
 
      else
@@ -181,13 +236,21 @@ void ChatPage::requestBeforeData(int seq)
      {
          ChatcontextlistItem *item = new ChatcontextlistItem();
          list->setSizeHint(QSize(0,95));
-         item->setContextInfo(msg.time,"더미",msg.fkStudent,msg.msg,ui->hash_combo->currentText(),ui->hash_combo->currentIndex());
+         item->setContextInfo(msg.name,msg.department,msg.fkStudent,msg.msg,ui->hash_combo->currentText(),ui->hash_combo->currentIndex());
          ui->veiw_chat->addItem(list);
          ui->veiw_chat->setItemWidget(list,item);
      }
 
      // 자동 스크롤바 내리
      ui->veiw_chat->scrollToBottom();
+
+
+     // 시작하고 처음으로 요청후 받을경우
+     if(isfirst==0)
+     {
+         emit successGetdata();
+         isfirst = 1;
+     }
  }
 
  void ChatPage::getDate(QString data)
@@ -205,6 +268,7 @@ void ChatPage::requestBeforeData(int seq)
          {
              message.pkChat = para.at(++i);
              msgSeq = message.pkChat.toInt();
+             tmpSeq = msgSeq;
          }
 
          else if(para.at(i)==FK_CLASS)
@@ -215,6 +279,12 @@ void ChatPage::requestBeforeData(int seq)
 
          else if(para.at(i)==TIME)
          {message.time = para.at(++i);}
+
+         else if(para.at(i)==NAME)
+         {message.name = para.at(++i);}
+
+         else if(para.at(i)==DEPARTMENT)
+         {message.department = para.at(++i);}
 
          else if(para.at(i)==MESSAGE)
          {
@@ -228,12 +298,32 @@ void ChatPage::requestBeforeData(int seq)
                 getFlag = ANOTHER_PERSON;
 
              setMessage(message,getFlag);
-         }
 
+             // 동기화 요청으로부터 응답일경우
+             if(isPoling & POLING)
+             {
+                 isPoling = isPoling & NON_POLING;
+                 isGet = 1;
+                 qDebug()<<"poling";
+             }
+
+             // 상용자가 메시지 전송하는것에 대한 응답일경우
+             else if(isPoling & NON_POLING)
+             {
+                 isPoling = isPoling & POLING;
+                 qDebug()<<"non_poling";
+             }
+
+         }
          i++ ;
      }
  }
 
+void ChatPage::closeEvent(QCloseEvent *event)
+ {
+    timer.stop();
+    event->accept();
+ }
 
  void ChatPage::keyPressEvent(QKeyEvent *event)
  {

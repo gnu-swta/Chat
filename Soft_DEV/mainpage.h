@@ -41,10 +41,6 @@ private:
 public:
     explicit mainPage(QString stdNum, QString loginData ,QWidget *parent = 0);
     ~mainPage();
-    void addChatList(QString className );
-    void addReportList(QString className);
-    void setClassInfo(QString data);
-    void showClassList();
 
 private:
     Ui::mainPage *ui;
@@ -56,6 +52,11 @@ private:
     void setStudentNumber(QString stnm);
     void getStudentInfo(QString data);
     void requireStudentInfo();
+    void addChatList(QString className );
+    void addReportList(QString className);
+    void setClassInfo(QString data);
+    void showClassList();
+
 
 
 private slots:
@@ -64,7 +65,7 @@ private slots:
     void slotClickChat();
     void slotClickChatList(QModelIndex idx);
     void slotGetReply(QNetworkReply *re);
-
+    void slotShowChatpage();
 };
 
 #endif // MAINPAGE_H

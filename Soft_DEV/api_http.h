@@ -25,9 +25,10 @@ public:
 
 private:
     QString appendUrl(int user, int url_type);
+    QString* getParameters(QString data, int count);
 
 private:
-    QString* getParameters(QString data, int count);
+
     QNetworkAccessManager *networkManager;
     QString parameters[10];
 

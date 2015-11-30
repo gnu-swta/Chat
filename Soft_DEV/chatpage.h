@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDebug>
 #include <QKeyEvent>
+#include <QCloseEvent>
 #include <QTimer>
 #include "chatcontextlistitem.h"
 #include "chatcontectlistitem_s.h"
@@ -17,6 +18,10 @@
 
 #define MINE             0
 #define ANOTHER_PERSON   1
+
+#define POLING          1
+#define NON_POLING      2
+#define POLINGTIME      1000
 
 namespace Ui {
 class ChatPage;
@@ -37,6 +42,9 @@ private:
     void setChatInfo(struct chatArr chIf);
     void getStudentInfo(QString name, QString id);
     virtual void keyPressEvent(QKeyEvent *event);
+    virtual void closeEvent(QCloseEvent *event);
+
+
     void getDate(QString data);
     void setMessage(struct msgArr msg, int isMine);
     void requestBeforeData(int seq);
@@ -46,20 +54,28 @@ private:
     QString studentName;
     QString studentID;
     Api_http *http_api;
+    Api_http *get_chat;
     struct chatArr chatIf;
     int msgSeq;
     QTimer timer;
+    int tmpSeq;
+    int isfirst;
+    int isPoling;
+    int isGet;
 
 signals:
     void sendMessage(QString msg);
     void pressEnterkey();
+    void successGetdata();
 
 private slots:
     void slotChangeHash(QString hash);
     void slotClickSendBtn();
     void slotSendMessage(QString message);
     void slotGetMessage(QNetworkReply*re);
+    void slotPolingGetmessage(QNetworkReply*re);
     void slotTimeout();
+    void slotquit(QObject* q);
 };
 
 #endif // CHATPAGE_H

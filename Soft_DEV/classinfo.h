@@ -28,6 +28,8 @@ struct msgArr{
     QString pkChat;
     QString fkClass;
     QString fkStudent;
+    QString department;
+    QString name;
     QString time;
     QString msg;
 };

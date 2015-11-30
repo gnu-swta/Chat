@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QFrame" name="">
+    <widget class="QFrame" name="frame">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(247, 191, 138);</string>
      </property>
@@ -85,6 +85,9 @@
        <property name="autoFillBackground">
         <bool>true</bool>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 237);</string>
+       </property>
        <property name="editTriggers">
         <set>QAbstractItemView::NoEditTriggers</set>
        </property>
@@ -96,7 +99,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QFrame" name="">
+    <widget class="QFrame" name="frame">
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
