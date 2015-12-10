@@ -26,5 +26,26 @@
         <file>res/send_b.png</file>
         <file>res/send_c.png</file>
         <file>res/send_o.png</file>
+        <file>res/cancel_b.png</file>
+        <file>res/cancel_c.png</file>
+        <file>res/cancel_o.png</file>
+        <file>res/ok_b.png</file>
+        <file>res/ok_c.png</file>
+        <file>res/ok_o.png</file>
+        <file>res/add_b.png</file>
+        <file>res/add_c.png</file>
+        <file>res/add_o.png</file>
+        <file>res/renew_b.png</file>
+        <file>res/renew_c.png</file>
+        <file>res/renew_o.png</file>
+        <file>res/del_b.png</file>
+        <file>res/del_c.png</file>
+        <file>res/del_o.png</file>
+        <file>res/mod_b.png</file>
+        <file>res/mod_c.png</file>
+        <file>res/mod_o.png</file>
+        <file>res/re_b.png</file>
+        <file>res/re_c.png</file>
+        <file>res/re_o.png</file>
     </qresource>
 </RCC>

@@ -2,11 +2,14 @@
 #define WIDGET_H
 
 #include <QWidget>
-#include "mainpage.h"
 #include "classinfo.h"
 #include "api_http.h"
 #include "type.h"
 #include "loading.h"
+#include "mainpage.h"
+
+#define STD     0
+#define PRFS   1
 
 namespace Ui {
 class Widget;

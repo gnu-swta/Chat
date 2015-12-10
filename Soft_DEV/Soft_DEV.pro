@@ -19,7 +19,14 @@ SOURCES += main.cpp\
     chatcontextlistitem.cpp \
     chatcontectlistitem_s.cpp \
     api_http.cpp \
-    loading.cpp
+    loading.cpp \
+    submit_manager.cpp \
+    submit_form.cpp \
+    report_manager.cpp \
+    report_form.cpp \
+    report_create.cpp \
+    subjectreport.cpp \
+    eachreport.cpp
 
 HEADERS  += widget.h \
     mainpage.h \
@@ -29,14 +36,28 @@ HEADERS  += widget.h \
     chatcontectlistitem_s.h \
     api_http.h \
     type.h \
-    loading.h
+    loading.h \
+    submit_manager.h \
+    submit_form.h \
+    report_manager.h \
+    report_form.h \
+    report_create.h \
+    subjectreport.h \
+    eachreport.h
 
 FORMS    += widget.ui \
     mainpage.ui \
     chatpage.ui \
     chatcontextlistitem.ui \
     chatcontectlistitem_s.ui \
-    loading.ui
+    loading.ui \
+    submit_manager.ui \
+    submit_form.ui \
+    report_manager.ui \
+    report_form.ui \
+    report_create.ui \
+    subjectreport.ui \
+    eachreport.ui
 
 RESOURCES += \
     resource.qrc

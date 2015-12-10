@@ -8,6 +8,9 @@ struct classArr{
     QString classRoomNum;
     QString className;
     QString classTime;
+    QString userName;
+    QString token;
+    QString id;
 };
 
 struct studentArr{
@@ -34,6 +37,26 @@ struct msgArr{
     QString msg;
 };
 
+struct reportArr{
+    QString pk_report;
+    QString fk_class;
+    QString title;
+    QString index;
+    QString start;
+    QString deadline;
+};
+
+struct submitArr{
+    QString pk_reportSubmit;
+    QString fk_student;
+    QString fk_report;
+    QString time;
+    QString fileURL;
+    QString extension;
+    QString modified;
+    QString opened;
+};
+
 
 #define PK_CLASS        "pk_class"
 #define NAME            "name"
@@ -52,6 +75,19 @@ struct msgArr{
 #define TIME            "time"
 #define MESSAGE         "msg"
 
+#define PK_REPORT       "pk_report"
+#define TITLE           "title"
+#define INDEX           "idex"
+#define START           "start"
+#define DEADLINE        "deadline"
+
+
+#define PK_REPORTSUBMIT "pk_reportSubmit"
+#define FK_REPORT       "fk_report"
+#define FILEURL         "fileURL"
+#define EXTENSION       "extension"
+#define MODIFIED        "modified"
+#define OPENED          "opened"
 
 #endif // CLASSINFO
 

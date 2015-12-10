@@ -112,6 +112,18 @@ QString Api_http::appendUrl(int user, int url_type)
     case (POST_CLASS):
         //url.append(URL_PROFESSOR);
         break;
+    case (POST_REGISTER_REPORT):
+        url.append(URL_REGISTER);
+        break;
+    case (GET_SUMMIT_LIST):
+        url.append(URL_SUMMIT_LIST);
+        break;
+    case (GET_REPORTLIST):
+        url.append(URL_REGISTER);
+        break;
+    case (POST_SUMMIT):
+        url.append(URL_SUMMIT);
+        break;
     default:
         break;
     }

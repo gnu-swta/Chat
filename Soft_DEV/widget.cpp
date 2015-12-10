@@ -31,14 +31,30 @@ void Widget::slotClickLoginBtn()
 
     QString parameters;
 
-    parameters.append("student/");
-    parameters.append(stdNum);
-    parameters.append("/");
 
-    parameters.append("passwd/");
-    parameters.append(passwd);
 
-    login->post_url(STUDENT,POST_LOGIN, parameters, NULL ,4,HEADER_NON);
+    // 학생 모드일경우
+    if(ui->type->currentIndex() == STD)
+    {
+        parameters.append("student/");
+        parameters.append(stdNum);
+        parameters.append("/");
+
+        parameters.append("passwd/");
+        parameters.append(passwd);
+        login->post_url(STUDENT,POST_LOGIN, parameters, NULL ,4,HEADER_NON);
+    }
+    // 교수 모드일경우
+    else
+    {
+        parameters.append("professor/");
+        parameters.append(stdNum);
+        parameters.append("/");
+
+        parameters.append("passwd/");
+        parameters.append(passwd);
+        login->post_url(PROFESSOR,POST_LOGIN, parameters, NULL ,4,HEADER_NON);
+    }
     load = new Loading();
     setWindowOpacity(0.8);
     load->show();
@@ -58,7 +74,7 @@ void Widget::slotGetReply(QNetworkReply *re)
 
         qDebug()<<getData;
 
-        mainpage = new mainPage(stdNum,getData);
+        mainpage = new mainPage(ui->type->currentIndex(),stdNum,getData);
         this->setHidden(true);
         mainpage->show();
         load->close();

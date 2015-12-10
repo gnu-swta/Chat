@@ -9,11 +9,16 @@
 #include "api_http.h"
 #include "type.h"
 #include <QDebug>
+#include "report_manager.h"
+#include "subjectreport.h"
 
 
 #define CLICK_CHAT      1
 #define CLICK_REPORT    2
 #define CLICK_SET       3
+
+#define STD     0
+#define PRFS    1
 
 namespace Ui {
 class mainPage;
@@ -29,6 +34,7 @@ private:
     struct studentArr studentInfo;
     struct chatArr chatInfo;
     int classCnt ;
+    int who;
 
     QString loginData;
     QString token;
@@ -39,7 +45,7 @@ private:
 
 
 public:
-    explicit mainPage(QString stdNum, QString loginData ,QWidget *parent = 0);
+    explicit mainPage(int type, QString stdNum, QString loginData , QWidget *parent = 0);
     ~mainPage();
 
 private:
@@ -66,6 +72,7 @@ private slots:
     void slotClickChatList(QModelIndex idx);
     void slotGetReply(QNetworkReply *re);
     void slotShowChatpage();
+    void slotClickReportList(QModelIndex idx);
 };
 
 #endif // MAINPAGE_H

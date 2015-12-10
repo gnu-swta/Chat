@@ -2,11 +2,14 @@
 #include "ui_mainpage.h"
 
 
-mainPage::mainPage(QString stdNum, QString loginData, QWidget *parent) :
+mainPage::mainPage(int type, QString stdNum, QString loginData, QWidget *parent) :
     QWidget(0),
     ui(new Ui::mainPage)
 {
     Q_UNUSED(parent);
+
+    // 누가 로그인했는지 판단
+    who = type;
 
     ui->setupUi(this);
     initConnect();
@@ -40,7 +43,30 @@ void mainPage::initConnect()
     connect(ui->report_btn, SIGNAL(clicked()),this, SLOT(slotClickReport()));
     connect(ui->set_btn,    SIGNAL(clicked()),this, SLOT(slotClickSet()));
     connect(ui->chat_list,  SIGNAL(doubleClicked(QModelIndex)), this, SLOT(slotClickChatList(QModelIndex)));
+    connect((ui->report_list),SIGNAL(doubleClicked(QModelIndex)),this,SLOT(slotClickReportList(QModelIndex)));
     connect(http_api,SIGNAL(getReply(QNetworkReply*)),this,SLOT(slotGetReply(QNetworkReply*)));
+}
+
+void mainPage::slotClickReportList(QModelIndex idx)
+{
+    int current_idx = idx.row();
+    classInfo[current_idx].token = token;
+    classInfo[current_idx].userName = studentInfo.name;
+    classInfo[current_idx].id       = studentInfo.studentID;
+
+    // 학생인경우
+    if(who == PRFS)
+    {
+        SubjectReport *new_window = new SubjectReport(classInfo[current_idx]);
+        new_window->show();
+    }
+
+    // 교수인 경우
+    else
+    {
+        Report_manager *reg = new Report_manager(classInfo[current_idx]);
+        reg->show();
+    }
 }
 
 
