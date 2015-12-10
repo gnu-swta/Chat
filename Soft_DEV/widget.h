@@ -34,6 +34,7 @@ private:
 private slots:
     void slotClickLoginBtn();
     void slotGetReply(QNetworkReply* re);
+    void slotReturnPress();
 };
 
 #endif // WIDGET_H

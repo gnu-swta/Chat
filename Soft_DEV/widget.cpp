@@ -6,11 +6,14 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    ui->id->setFocus();
     this->setAutoFillBackground(true);
     this->setAttribute(Qt::WA_TranslucentBackground, true);
     initPointer();
     connect(ui->login_btn, SIGNAL(clicked()),this,SLOT(slotClickLoginBtn()));
     connect(login,SIGNAL(getReply(QNetworkReply*)),this, SLOT(slotGetReply(QNetworkReply*)));
+    connect(ui->id, SIGNAL(returnPressed()), this, SLOT(slotReturnPress()));
+    connect(ui->pw, SIGNAL(returnPressed()), this, SLOT(slotClickLoginBtn()));
 }
 
 Widget::~Widget()
@@ -90,4 +93,9 @@ void Widget::slotGetReply(QNetworkReply *re)
     }
 
 
+}
+
+void Widget::slotReturnPress()
+{
+    ui->pw->setFocus();
 }
