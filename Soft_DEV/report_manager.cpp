@@ -46,6 +46,7 @@ void Report_manager::slot_renwwal()
     // 레포트 리스트를 갱신한다.
 
     ui->report_list->clear();
+    ui->report_list->clear();
     QString parameter;
 
     parameter.append(test.classNum+"/");
@@ -93,6 +94,7 @@ void Report_manager::get_Report_List(QString data)
     QStringList para = api_http->getParsData(data);
     int i;
 
+    report_count = 0;
     for(i = 0;i < para.size();)
     {
         if(para.at(i)==PK_REPORT)
@@ -123,18 +125,17 @@ void Report_manager::set_report()
 {
     // 서버로부터 강의의 정보를 가지고 과제 리스트를 받아온다.
     // 레포트 명, 레포트 기간
-    static int num = 0;
+    int num = 0;
 
-    while(num != report_count-1)
+    while(num != report_count)
     {
-        item[num] = new Report_form(num++);
-
+        item[num] = new Report_form(num);
         item[num]->set_info(num, list[num].title, list[num].start, list[num].deadline);
-        qDebug()<<list[num].title;
 
         show_report(num);
         connect(item[num], SIGNAL(click_modify(int)), this, SLOT(slot_click_mod(int)));
         connect(item[num], SIGNAL(click_del(int)), this, SLOT(slot_click_del(int)));
+        num++;
     }
 }
 

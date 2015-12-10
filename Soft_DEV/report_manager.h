@@ -31,7 +31,7 @@ private:
     classArr test;
     int report_count;
     Api_http *api_http;
-    Report_form *item[10];
+    Report_form *item[30];
 
 private slots:
     void slot_create();

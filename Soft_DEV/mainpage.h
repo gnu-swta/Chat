@@ -42,7 +42,7 @@ private:
     QString studentData;
 
     Api_http *http_api;
-
+    SubjectReport *new_window;
 
 public:
     explicit mainPage(int type, QString stdNum, QString loginData , QWidget *parent = 0);
@@ -73,6 +73,7 @@ private slots:
     void slotGetReply(QNetworkReply *re);
     void slotShowChatpage();
     void slotClickReportList(QModelIndex idx);
+    void slotGetDone();
 };
 
 #endif // MAINPAGE_H

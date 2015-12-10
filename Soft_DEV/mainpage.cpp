@@ -47,6 +47,11 @@ void mainPage::initConnect()
     connect(http_api,SIGNAL(getReply(QNetworkReply*)),this,SLOT(slotGetReply(QNetworkReply*)));
 }
 
+void mainPage::slotGetDone()
+{
+
+}
+
 void mainPage::slotClickReportList(QModelIndex idx)
 {
     int current_idx = idx.row();
@@ -57,8 +62,9 @@ void mainPage::slotClickReportList(QModelIndex idx)
     // 학생인경우
     if(who == PRFS)
     {
-        SubjectReport *new_window = new SubjectReport(classInfo[current_idx]);
+        new_window = new SubjectReport(classInfo[current_idx]);
         new_window->show();
+
     }
 
     // 교수인 경우

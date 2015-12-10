@@ -22,6 +22,9 @@ Submit_manager::Submit_manager(struct reportArr report, struct classArr data, QW
 
     ui->user_name->setText(test.userName);
     ui->class_name->setText(test.className);
+
+    connect(&timer,SIGNAL(timeout()),this,SLOT(slotTimeout()));
+
 }
 
 Submit_manager::~Submit_manager()
@@ -44,6 +47,8 @@ void Submit_manager::getSummitList(QString data)
 {
     QStringList para = api_http->getParsData(data);
     int i = 0;
+
+    listCnt=0;
 
     for(i=0;i<para.size();)
     {
@@ -91,10 +96,12 @@ void Submit_manager::set_submit()
 
         fileName.append(list[i].fk_student);
         fileName.append(".");
-        fileName.append(list[i].fileURL);
+        fileName.append(list[i].extension);
 
-        student->set_info(list[i].pk_reportSubmit, list[i].fk_student,fileName,list[i].time);
+        student->set_info(i+1, list[i].fk_student,fileName,list[i].time);
+        connect(student,SIGNAL(upload(QString)),this,SLOT(slot_upload(QString)));
         show_submit(student);
+        fileName.clear();
     }
 }
 
@@ -104,8 +111,30 @@ void Submit_manager::show_submit(Submit_form *student)
 
     QListWidgetItem *subject = new QListWidgetItem();
 
+    subject->setSizeHint(QSize(0,50));
+
     ui->student_list->addItem(subject);
     ui->student_list->setItemWidget(subject, student);
+}
+
+void Submit_manager::slot_upload(QString fname)
+{
+    load = new Loading();
+    load->setTxt("레포트 다운로드중...");
+    setWindowOpacity(0.8);
+    load->show();
+    timer.start(2000);
+}
+
+void Submit_manager::slotTimeout()
+{
+    load->close();
+    setWindowOpacity(1.0);
+    timer.stop();
+
+    // 리포트 파일 다운받아서 여는 부분
+    QString str = "/Users/josh/Desktop/uml.pdf";
+    qDebug()<<QDesktopServices::openUrl(QUrl::fromLocalFile(str));
 }
 
 void Submit_manager::down_report()

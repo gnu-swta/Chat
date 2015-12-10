@@ -33,8 +33,9 @@ void Report_form::set_info(int num, QString name, QString s_date, QString e_date
     QString perid;
     QString number;
 
-    if(num%2) this->setStyleSheet("background:rgb(226,233,246)");
-    else this->setStyleSheet("background:rgb(255,255,255)");
+    if(num%2) this->window()->setStyleSheet("background:rgb(226,233,246)");
+    else this->window()->setStyleSheet("background:rgb(255,255,255)");
+
 
     number = number.setNum(num+1);
 

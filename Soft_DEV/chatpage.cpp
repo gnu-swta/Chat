@@ -9,7 +9,10 @@ ChatPage::ChatPage(struct chatArr chatInfo, QWidget *parent) :
 
     http_api = new Api_http();
     get_chat = new Api_http();
+
     msgSeq = 0;
+    tmpSeq = 0;
+
     isfirst = 0;
     isGet = 1;
 
@@ -243,14 +246,6 @@ void ChatPage::requestBeforeData(int seq)
 
      // 자동 스크롤바 내리
      ui->veiw_chat->scrollToBottom();
-
-
-     // 시작하고 처음으로 요청후 받을경우
-     if(isfirst==0)
-     {
-         emit successGetdata();
-         isfirst = 1;
-     }
  }
 
  void ChatPage::getDate(QString data)
@@ -316,6 +311,12 @@ void ChatPage::requestBeforeData(int seq)
 
          }
          i++ ;
+     }
+     // 시작하고 처음으로 요청후 받을경우
+     if(isfirst==0)
+     {
+         emit successGetdata();
+         isfirst = 1;
      }
  }
 

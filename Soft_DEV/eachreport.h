@@ -20,13 +20,15 @@ public:
 
 private:
     Ui::EachReport *ui;
-    QString id;
+    QString sid;
     Loading *load;
     QTimer timer;
 
 private slots:
     void on_Button_FileUpload_clicked();
-    void slotTimeout();
+
+signals:
+    void upload();
 };
 
 #endif // EACHREPORT_H

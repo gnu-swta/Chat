@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>383</width>
-    <height>410</height>
+    <width>798</width>
+    <height>529</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,18 +18,21 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>383</width>
-    <height>410</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>383</width>
-    <height>410</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(247, 191, 138);</string>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -41,189 +44,334 @@
    <set>QMainWindow::AnimatedDocks</set>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="Widget_ReportList" native="true">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>381</width>
-      <height>371</height>
-     </rect>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <property name="spacing">
+     <number>0</number>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(247, 191, 138);</string>
+    <property name="leftMargin">
+     <number>0</number>
     </property>
-    <widget class="QLabel" name="label_7">
-     <property name="geometry">
-      <rect>
-       <x>310</x>
-       <y>30</y>
-       <width>51</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>-윤고딕330</family>
-      </font>
-     </property>
-     <property name="text">
-      <string>수신확인</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>30</y>
-       <width>51</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>-윤고딕330</family>
-      </font>
-     </property>
-     <property name="text">
-      <string>제출기간</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="Button_AddTest">
-     <property name="geometry">
-      <rect>
-       <x>305</x>
-       <y>2</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>추가 테스트</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>30</y>
-       <width>41</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>-윤고딕330</family>
-      </font>
-     </property>
-     <property name="text">
-      <string>과제명</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_6">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>30</y>
-       <width>51</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>-윤고딕330</family>
-      </font>
-     </property>
-     <property name="text">
-      <string>파일첨부</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>30</y>
-       <width>31</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>-윤고딕330</family>
-      </font>
-     </property>
-     <property name="text">
-      <string>번호</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>11</x>
-       <y>25</y>
-       <width>368</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>:/img/top.PNG</pixmap>
-     </property>
-    </widget>
-    <widget class="QWidget" name="verticalWidget" native="true">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>60</y>
-       <width>341</width>
-       <height>281</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 255);</string>
-     </property>
-     <layout class="QVBoxLayout" name="Layout_ReportList">
-      <property name="spacing">
-       <number>0</number>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QWidget" name="horizontalWidget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>20</height>
+       </size>
       </property>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </widget>
-    <zorder>label_2</zorder>
-    <zorder>label_7</zorder>
-    <zorder>label_5</zorder>
-    <zorder>Button_AddTest</zorder>
-    <zorder>label_4</zorder>
-    <zorder>label_6</zorder>
-    <zorder>label_3</zorder>
-    <zorder>verticalWidget</zorder>
-   </widget>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(227, 133, 135);</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>레포트 제출</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="class_2">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>강의</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="id">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>학번</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+      <zorder>label_2</zorder>
+      <zorder>id</zorder>
+      <zorder>class_2</zorder>
+      <zorder>horizontalSpacer</zorder>
+      <zorder>horizontalSpacer_2</zorder>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="verticalFrame">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>35</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>35</height>
+       </size>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QWidget" name="horizontalWidget" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>35</height>
+          </size>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>5</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>5</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="font">
+             <font>
+              <family>-윤고딕330</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>번호</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="font">
+             <font>
+              <family>-윤고딕330</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>과제명</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_5">
+            <property name="font">
+             <font>
+              <family>-윤고딕330</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>제출기간</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_6">
+            <property name="font">
+             <font>
+              <family>-윤고딕330</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>파일첨부</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_7">
+            <property name="font">
+             <font>
+              <family>-윤고딕330</family>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>수신확인</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+         <zorder>label_4</zorder>
+         <zorder>label_5</zorder>
+         <zorder>label_6</zorder>
+         <zorder>label_7</zorder>
+         <zorder>horizontalSpacer_3</zorder>
+         <zorder>horizontalSpacer_4</zorder>
+         <zorder>horizontalSpacer_5</zorder>
+         <zorder>horizontalSpacer_6</zorder>
+         <zorder>label_3</zorder>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QListWidget" name="listWidget">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>383</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

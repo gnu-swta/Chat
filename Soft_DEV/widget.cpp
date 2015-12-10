@@ -6,7 +6,6 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    ui->id->setFocus();
     this->setAutoFillBackground(true);
     this->setAttribute(Qt::WA_TranslucentBackground, true);
     initPointer();
@@ -91,8 +90,6 @@ void Widget::slotGetReply(QNetworkReply *re)
         load->hide();
         setWindowOpacity(1);
     }
-
-
 }
 
 void Widget::slotReturnPress()

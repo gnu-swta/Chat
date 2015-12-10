@@ -27,16 +27,6 @@
     <number>5</number>
    </property>
    <item>
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>:/img/border.PNG</pixmap>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QLabel" name="label_num">
      <property name="text">
       <string>0</string>
@@ -61,6 +51,9 @@
      <property name="text">
       <string/>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
    <item>
@@ -75,6 +68,9 @@
      </property>
      <property name="text">
       <string>미제출</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -118,7 +114,6 @@ QPushButton#button_upload:pressed {
     </widget>
    </item>
   </layout>
-  <zorder>label_3</zorder>
   <zorder>button_upload</zorder>
   <zorder>label_num</zorder>
   <zorder>label_subject</zorder>

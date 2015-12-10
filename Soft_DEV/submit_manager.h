@@ -6,6 +6,9 @@
 #include "classinfo.h"
 #include <QWidget>
 #include "api_http.h"
+#include "loading.h"
+#include "QTimer"
+#include <QDesktopServices>
 
 namespace Ui {
 class Submit_manager;
@@ -31,11 +34,15 @@ private:
     void getSummitList(QString data);
 
     Api_http *api_http;
+    Loading *load;
+    QTimer timer;
 
 private slots:
     void slotGetReply(QNetworkReply* re);
+    void slot_upload(QString fname);
+    void slotTimeout();
 
-private slots:
+
 
 };
 

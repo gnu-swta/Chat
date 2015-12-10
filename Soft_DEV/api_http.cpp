@@ -24,6 +24,7 @@ void Api_http::post_url(int user, int url_type, QString data, QString header, in
     QUrl serviceUrl;
     QNetworkRequest networkRequest;
 
+
     int i=0,j=0;
 
     // make url
@@ -68,6 +69,7 @@ void Api_http::post_url(int user, int url_type, QString data, QString header, in
     networkRequest.setHeader(QNetworkRequest::ContentDispositionHeader,
                              "application/x-www-form-urlencoded");
     networkManager->post(networkRequest,postData);
+
 }
 
 QStringList Api_http::getParsData(QString data)
@@ -84,6 +86,8 @@ QStringList Api_http::getParsData(QString data)
                       QRegExp::escape("}")+")");
 
      QStringList parameter;
+
+     qDebug()<<data;
      parameter=data.split(parseType,QString::SkipEmptyParts);
 
      return parameter;
@@ -193,7 +197,7 @@ void Api_http::get_url(int user, int url_type, QString data, int count)
 QString* Api_http::getParameters(QString data, int count)
 {
     QRegExp parseType("/");
-    QStringList parameter =data.split(parseType,QString::SkipEmptyParts);
+    QStringList parameter = data.split(parseType,QString::SkipEmptyParts);
 
     int i=0;
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>457</width>
-    <height>247</height>
+    <height>506</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
     <number>10</number>
    </property>
    <item>
-    <widget class="QFrame" name="">
+    <widget class="QFrame" name="frame">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -285,7 +285,7 @@
      <item>
       <widget class="QTextEdit" name="explain">
        <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
+        <enum>Qt::ClickFocus</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>

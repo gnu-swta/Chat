@@ -12,10 +12,12 @@ EachReport::EachReport(int num, QString subject, QString time, QString id,QWidge
     ui->label_num->setText(QString("%1").arg(num));
     ui->label_subject->setText(subject);
     ui->label_time->setText(time);
-    id=id;
+    sid=id;
+
+    qDebug()<<id;
 
     connect(ui->button_upload, SIGNAL(clicked(bool)), this, SLOT(on_Button_FileUpload_clicked()));
-    connect(&timer,SIGNAL(timeout()),this,SLOT(slotTimeout()));
+
 }
 
 EachReport::~EachReport()
@@ -32,27 +34,20 @@ QString EachReport::ConvertKor(char *str)
 void EachReport::on_Button_FileUpload_clicked()
 {
     QString filename = QFileDialog::getOpenFileName(this,tr("Select file"), "/home/", tr("All Files (*.*)"));
+    qDebug()<<filename;
+    int i = 0;
+    for(i=0;i<filename.length();i++)
+        if(filename.at(i)=='.')
+            break;
 
-    QRegExp parseType(".");
-
-     QStringList parameter;
-     parameter=filename.split(parseType,QString::SkipEmptyParts);
+    qDebug()<<i;
+    qDebug()<<filename.mid(i);
 
      QString fileText;
-     fileText.append(id);
-     fileText.append(".");
-     fileText.append(parameter.at(1));
+     fileText.append(sid);
+     fileText.append(filename.mid(i));
 
      ui->filename->setText(fileText);
 
-     load = new Loading();
-     setWindowOpacity(0.8);
-     load->show();
-     timer.start(2000);
-}
-
-void EachReport::slotTimeout()
-{
-    timer.stop();
-    load->close();
+     emit upload();
 }

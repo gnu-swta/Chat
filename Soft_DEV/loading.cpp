@@ -10,6 +10,12 @@ Loading::Loading(QWidget *parent) :
     this->setAttribute(Qt::WA_TranslucentBackground, true);
 }
 
+
+void Loading::setTxt(QString txt)
+{
+    ui->label->setText(txt);
+}
+
 Loading::~Loading()
 {
     qDebug()<<"quit load";

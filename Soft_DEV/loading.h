@@ -15,9 +15,11 @@ class Loading : public QWidget
 public:
     explicit Loading(QWidget *parent = 0);
     ~Loading();
+    void setTxt(QString txt);
 
 private:
     Ui::Loading *ui;
+
 };
 
 #endif // LOADING_H
